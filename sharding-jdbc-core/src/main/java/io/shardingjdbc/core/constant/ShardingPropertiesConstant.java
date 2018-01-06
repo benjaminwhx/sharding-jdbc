@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Sharding properties constant.
+ * 分片属性常量
  * 
  * @author gaohongtao
  * @author caohao
@@ -31,25 +31,21 @@ import lombok.RequiredArgsConstructor;
 public enum ShardingPropertiesConstant {
     
     /**
-     * Enable or Disable to show SQL details.
-     * 
-     * <p>
-     * Print SQL details can help developers debug easier. 
-     * The details includes: logic SQL, parse context and rewrote actual SQL list. 
-     * Enable this property will log into log topic: {@code Sharding-JDBC-SQL}, log level is {@code INFO}.
-     * Default: false
-     * </p>
+     * 开启或不开启显示SQL详细信息
+     *
+     * 打印SQL详细信息能更好的帮助开发者debug
+     * 详细信息包括：逻辑SQL，解析上下文以及重写出真实的SQL集合
+     * 指定这个属性将使得log打印到主题Sharding-JDBC-SQL中，日志级别为INFO
+     * 默认：false
      */
     SQL_SHOW("sql.show", Boolean.FALSE.toString(), boolean.class),
     
     /**
-     * Worker thread max size.
-     * 
-     * <p>
-     * Execute SQL Statement and PrepareStatement will use this thread pool.
-     * One sharding data source will use a independent thread pool, it does not share thread pool even different data source in same JVM.
-     * Default: same with CPU cores.
-     * </p>
+     * worker线程最大大小
+     *
+     * 执行SQL Statement和PrepareStatement将使用线程池
+     * 一个分片的数据源将使用独立的线程池，甚至同一个JVM的不同数据源都不共享线程池
+     * 默认：和CPU核数相同
      */
     EXECUTOR_SIZE("executor.size", String.valueOf(Runtime.getRuntime().availableProcessors()), int.class);
     
@@ -60,9 +56,9 @@ public enum ShardingPropertiesConstant {
     private final Class<?> type;
     
     /**
-     * Find value via property key.
+     * 找出指定key对应的实例对象
      * 
-     * @param key property key
+     * @param key 属性key
      * @return value enum, return {@code null} if not found
      */
     public static ShardingPropertiesConstant findByKey(final String key) {

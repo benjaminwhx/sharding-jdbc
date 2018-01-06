@@ -18,16 +18,16 @@
 package io.shardingjdbc.core.keygen;
 
 /**
- * Key generator interface.
+ * Key生成器接口
  *
  * @author zhangliang
  */
 public interface KeyGenerator {
     
     /**
-     * Generate key.
+     * 生成key
      * 
-     * @return generated key
+     * @return 生成的key
      */
     Number generateKey();
 }

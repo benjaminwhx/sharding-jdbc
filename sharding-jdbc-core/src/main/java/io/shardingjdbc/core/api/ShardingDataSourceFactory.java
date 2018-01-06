@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Sharding data source factory.
+ * 分片数据源工厂
  * 
  * @author zhangliang 
  */
@@ -45,7 +45,7 @@ import java.util.Properties;
 public final class ShardingDataSourceFactory {
     
     /**
-     * Create sharding data source.
+     * 创建一个分片数据源
      *
      * @param dataSourceMap data source map
      * @param shardingRuleConfig rule configuration for databases and tables sharding

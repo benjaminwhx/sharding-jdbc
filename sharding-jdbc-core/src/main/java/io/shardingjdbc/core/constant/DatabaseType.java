@@ -24,7 +24,7 @@ import com.google.common.collect.Iterators;
 import java.util.Arrays;
 
 /**
- * Supported database.
+ * 支持的数据源类型
  * 
  * @author zhangliang
  */

@@ -18,14 +18,14 @@
 package io.shardingjdbc.core.keygen;
 
 /**
- * Time service.
+ * 时间服务
  * 
  * @author zhangliang
  */
 public class TimeService {
     
     /**
-     * Get current millis.
+     * 获取当前时间
      * 
      * @return current millis
      */

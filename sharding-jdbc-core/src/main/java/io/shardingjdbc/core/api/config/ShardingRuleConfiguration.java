@@ -37,33 +37,44 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * Sharding rule configuration.
+ * 分片规则配置
  * 
  * @author zhangliang
  */
 @Getter
 @Setter
 public class ShardingRuleConfiguration {
-    
+
+    /**
+     * 默认的数据源名字
+     */
     private String defaultDataSourceName;
-    
+
+    /**
+     * 表规则配置
+     */
     private Collection<TableRuleConfiguration> tableRuleConfigs = new LinkedList<>();
     
     private Collection<String> bindingTableGroups = new LinkedList<>();
-    
+
+    /**
+     * 默认数据源分片策略配置
+     */
     private ShardingStrategyConfiguration defaultDatabaseShardingStrategyConfig;
-    
+    /**
+     * 默认表分片策略配置
+     */
     private ShardingStrategyConfiguration defaultTableShardingStrategyConfig;
-    
+
     private String defaultKeyGeneratorClass;
     
     private Collection<MasterSlaveRuleConfiguration> masterSlaveRuleConfigs = new LinkedList<>();
     
     /**
-     * Build sharding rule.
+     * 构建分片规则
      *
-     * @param dataSourceMap data source map
-     * @return sharding rule
+     * @param dataSourceMap 数据源map
+     * @return 分片规则
      * @throws SQLException SQL exception
      */
     public ShardingRule build(final Map<String, DataSource> dataSourceMap) throws SQLException {
@@ -71,9 +82,12 @@ public class ShardingRuleConfiguration {
         Preconditions.checkArgument(!dataSourceMap.isEmpty(), "dataSources cannot be null.");
         processDataSourceMapWithMasterSlave(dataSourceMap);
         Collection<TableRule> tableRules = new LinkedList<>();
+        // 1、构建表规则
         for (TableRuleConfiguration each : tableRuleConfigs) {
             tableRules.add(each.build(dataSourceMap));
         }
+
+        // 2、构建默认的数据源和表的策略
         ShardingStrategy defaultDatabaseShardingStrategy = null == defaultDatabaseShardingStrategyConfig ? null : defaultDatabaseShardingStrategyConfig.build();
         ShardingStrategy defaultTableShardingStrategy = null == defaultTableShardingStrategyConfig ? null :  defaultTableShardingStrategyConfig.build();
         KeyGenerator keyGenerator = KeyGeneratorFactory.newInstance(null == defaultKeyGeneratorClass ? DefaultKeyGenerator.class.getName() : defaultKeyGeneratorClass);

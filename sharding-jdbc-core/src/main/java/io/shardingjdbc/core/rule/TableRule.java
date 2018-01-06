@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Table rule configuration.
+ * 表规则配置
  * 
  * @author zhangliang
  */
@@ -57,6 +57,7 @@ public final class TableRule {
                      final ShardingStrategy databaseShardingStrategy, final ShardingStrategy tableShardingStrategy, 
                      final String generateKeyColumn, final KeyGenerator keyGenerator, final String logicIndex) {
         this.logicTable = logicTable;
+        // 获取真实的数据节点：List<db-tb>
         this.actualDataNodes = null == actualDataNodes || actualDataNodes.isEmpty() ? generateDataNodes(logicTable, dataSourceMap) : generateDataNodes(actualDataNodes, dataSourceMap);
         this.databaseShardingStrategy = databaseShardingStrategy;
         this.tableShardingStrategy = tableShardingStrategy;
@@ -64,7 +65,14 @@ public final class TableRule {
         this.keyGenerator = keyGenerator;
         this.logicIndex = logicIndex;
     }
-    
+
+    /**
+     * 根据逻辑表名生成分片数据节点集合
+     * @note: 这个是多库单表时候调用。
+     * @param logicTable
+     * @param dataSourceMap
+     * @return
+     */
     private List<DataNode> generateDataNodes(final String logicTable, final Map<String, DataSource> dataSourceMap) {
         List<DataNode> result = new LinkedList<>();
         for (String each : dataSourceMap.keySet()) {
@@ -72,7 +80,14 @@ public final class TableRule {
         }
         return result;
     }
-    
+
+    /**
+     * 根据逻辑表名生成分片数据节点集合
+     * dataSourceMap的key一定要存在actualDataNodes中的数据源名字
+     * @param actualDataNodes
+     * @param dataSourceMap
+     * @return
+     */
     private List<DataNode> generateDataNodes(final List<String> actualDataNodes, final Map<String, DataSource> dataSourceMap) {
         List<DataNode> result = new LinkedList<>();
         for (String each : actualDataNodes) {
@@ -86,9 +101,9 @@ public final class TableRule {
     }
     
     /**
-     * Get actual data source names.
+     * 获取真实的数据源名字
      *
-     * @return actual data source names
+     * @return 真实数据源名字
      */
     public Collection<String> getActualDatasourceNames() {
         Collection<String> result = new LinkedHashSet<>(actualDataNodes.size());
@@ -99,10 +114,10 @@ public final class TableRule {
     }
     
     /**
-     * Get actual table names via target data source name.
+     * 根据数据源名字获取真实的表名
      *
-     * @param targetDataSource target data source name
-     * @return names of actual tables
+     * @param targetDataSource 目标数据源名字
+     * @return 真实的表名
      */
     public Collection<String> getActualTableNames(final String targetDataSource) {
         Collection<String> result = new LinkedHashSet<>(actualDataNodes.size());
@@ -113,7 +128,13 @@ public final class TableRule {
         }
         return result;
     }
-    
+
+    /**
+     * 遍历actualDataNodes，返回真实的表索引
+     * @param dataSourceName
+     * @param actualTableName
+     * @return
+     */
     int findActualTableIndex(final String dataSourceName, final String actualTableName) {
         int result = 0;
         for (DataNode each : actualDataNodes) {

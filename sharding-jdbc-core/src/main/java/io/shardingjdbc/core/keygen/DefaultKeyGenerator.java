@@ -26,12 +26,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Default distributed primary key generator.
- * 
- * <p>
- * Use snowflake algorithm. Length is 64 bit.
- * </p>
- * 
+ * 默认的分布式id生成算法
+ *
+ * 使用了snowflake算法，长度64bit
+ *
  * <pre>
  * 1bit   sign bit.
  * 41bits timestamp offset from 2016.11.01(Sharding-JDBC distributed primary key published data) to now.

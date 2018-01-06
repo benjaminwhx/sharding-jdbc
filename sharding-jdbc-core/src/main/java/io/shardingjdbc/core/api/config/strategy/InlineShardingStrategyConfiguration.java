@@ -24,7 +24,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Inline sharding strategy configuration.
+ * 内联分片策略配置
  * 
  * @author zhangliang
  */

@@ -52,7 +52,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * SQL execute engine.
+ * SQL执行引擎
  * 
  * @author gaohongtao
  * @author zhangliang

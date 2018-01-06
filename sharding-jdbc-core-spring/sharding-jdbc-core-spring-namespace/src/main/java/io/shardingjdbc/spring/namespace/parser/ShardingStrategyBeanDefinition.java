@@ -31,7 +31,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.w3c.dom.Element;
 
 /**
- * Sharding strategy parser for spring namespace.
+ * 解析spring命名空间的分片策略配置
  * 
  * @author caohao
  */
@@ -41,14 +41,19 @@ public class ShardingStrategyBeanDefinition {
     static AbstractBeanDefinition getBeanDefinitionByElement(final Element element) {
         String type = element.getLocalName();
         switch (type) {
+            // standard-strategy
             case ShardingStrategyBeanDefinitionParserTag.STANDARD_STRATEGY_ROOT_TAG:
                 return getStandardShardingStrategyConfigBeanDefinition(element);
+            // complex-strategy
             case ShardingStrategyBeanDefinitionParserTag.COMPLEX_STRATEGY_ROOT_TAG:
                 return getComplexShardingStrategyConfigBeanDefinition(element);
+            // inline-strategy
             case ShardingStrategyBeanDefinitionParserTag.INLINE_STRATEGY_ROOT_TAG:
                 return getInlineShardingStrategyConfigBeanDefinition(element);
+            // hint-strategy
             case ShardingStrategyBeanDefinitionParserTag.HINT_STRATEGY_ROOT_TAG:
                 return getHintShardingStrategyConfigBeanDefinition(element);
+            // none-strategy
             case ShardingStrategyBeanDefinitionParserTag.NONE_STRATEGY_ROOT_TAG:
                 return getNoneShardingStrategyConfigBeanDefinition();
             default:

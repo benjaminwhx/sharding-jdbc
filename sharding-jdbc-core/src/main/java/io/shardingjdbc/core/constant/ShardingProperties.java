@@ -27,7 +27,7 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * The properties for Sharding-JDBC configuration.
+ * Sharding-JDBC的属性配置
  *
  * @author gaohongtao
  * @author zhangliang
@@ -40,12 +40,16 @@ public final class ShardingProperties {
         this.props = props;
         validate();
     }
-    
+
+    /**
+     * 校验配置的key对应value的类型是否合法，例如boolean类型只能写true和false
+     */
     private void validate() {
         Set<String> propertyNames = props.stringPropertyNames();
         Collection<String> errorMessages = new ArrayList<>(propertyNames.size());
         for (String each : propertyNames) {
             ShardingPropertiesConstant shardingPropertiesConstant = ShardingPropertiesConstant.findByKey(each);
+            // 忽略不存在的配置信息，不报错
             if (null == shardingPropertiesConstant) {
                 continue;
             }
@@ -73,11 +77,11 @@ public final class ShardingProperties {
     }
     
     /**
-     * Get property value.
+     * 获得配置的属性值
      * 
-     * @param shardingPropertiesConstant sharding properties constant
-     * @param <T> class type of return value
-     * @return property value
+     * @param shardingPropertiesConstant 分片属性实例
+     * @param <T> 返回值的类型
+     * @return 属性值
      */
     @SuppressWarnings("unchecked")
     public <T> T getValue(final ShardingPropertiesConstant shardingPropertiesConstant) {

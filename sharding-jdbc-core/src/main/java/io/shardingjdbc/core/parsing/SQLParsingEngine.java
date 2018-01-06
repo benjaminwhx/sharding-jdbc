@@ -26,7 +26,7 @@ import io.shardingjdbc.core.parsing.parser.sql.SQLParserFactory;
 import lombok.RequiredArgsConstructor;
 
 /**
- * SQL parsing engine.
+ * SQL解析引擎
  *
  * @author zhangliang
  */
@@ -40,7 +40,7 @@ public final class SQLParsingEngine {
     private final ShardingRule shardingRule;
     
     /**
-     * Parse SQL.
+     * 解析SQL.
      * 
      * @return parsed SQL statement
      */

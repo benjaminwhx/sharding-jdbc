@@ -22,21 +22,21 @@ import io.shardingjdbc.core.api.algorithm.sharding.ShardingValue;
 import java.util.Collection;
 
 /**
- * Sharding strategy.
+ * 分片策略
  * 
  * @author zhangliang
  */
 public interface ShardingStrategy {
     
     /**
-     * Get sharding columns.
+     * 获取分片的列
      * 
-     * @return sharding columns
+     * @return 分片列
      */
     Collection<String> getShardingColumns();
     
     /**
-     * Sharding.
+     * 分片.
      *
      * @param availableTargetNames available data sources or tables's names
      * @param shardingValues sharding values

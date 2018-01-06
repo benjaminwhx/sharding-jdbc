@@ -25,7 +25,7 @@ import io.shardingjdbc.core.routing.router.SQLRouterFactory;
 import java.util.List;
 
 /**
- * PreparedStatement routing engine.
+ * PreparedStatement路由引擎
  * 
  * @author zhangliang
  */
@@ -43,12 +43,12 @@ public final class PreparedStatementRoutingEngine {
     }
     
     /**
-     * SQL route.
-     * 
-     * <p>First routing time will parse SQL, after second time will reuse first parsed result.</p>
-     * 
-     * @param parameters parameters of SQL placeholder
-     * @return route result
+     * SQL路由
+     *
+     * 第一次路由会解析sql，接着之后会复用第一次的解析结果。
+     *
+     * @param parameters sql占位符参数
+     * @return 路由结果
      */
     public SQLRouteResult route(final List<Object> parameters) {
         if (null == sqlStatement) {

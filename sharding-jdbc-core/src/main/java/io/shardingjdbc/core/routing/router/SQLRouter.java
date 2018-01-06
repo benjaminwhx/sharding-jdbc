@@ -23,14 +23,14 @@ import io.shardingjdbc.core.routing.SQLRouteResult;
 import java.util.List;
 
 /**
- * SQL router interface.
+ * SQL路由接口
  * 
  * @author zhangiang
  */
 public interface SQLRouter {
     
     /**
-     * Parse SQL.
+     * 解析SQL
      * 
      * @param logicSQL logic SQL
      * @param parametersSize parameters size
@@ -39,7 +39,7 @@ public interface SQLRouter {
     SQLStatement parse(String logicSQL, int parametersSize);
     
     /**
-     * Route SQL.
+     * 路由SQL
      * 
      * @param logicSQL logic SQL
      * @param sqlStatement SQL statement

@@ -40,13 +40,28 @@ import java.util.Map;
 @Getter
 @Setter
 public class TableRuleConfiguration {
-    
+
+    /**
+     * 逻辑表
+     */
     private String logicTable;
-    
+
+    /**
+     * 真实的数据节点配置
+     * 例如：ds_${0..1}.t_order_${0..1}表示数据源ds_0到ds_1下面的t_order_0到t_order_1表
+     */
     private String actualDataNodes;
-    
+
+    /**
+     * 数据源分片策略配置
+     * 用来选取合适的分片策略
+     */
     private ShardingStrategyConfiguration databaseShardingStrategyConfig;
-    
+
+    /**
+     * 表分片策略配置
+     * 用来选取合适的分片策略
+     */
     private ShardingStrategyConfiguration tableShardingStrategyConfig;
     
     private String keyGeneratorColumnName;
@@ -56,17 +71,21 @@ public class TableRuleConfiguration {
     private String logicIndex;
     
     /**
-     * Build table rule.
+     * 构建表规则
      *
-     * @param dataSourceMap data source map
-     * @return table rule
+     * @param dataSourceMap 数据源map
+     * @return 表规则
      */
     public TableRule build(final Map<String, DataSource> dataSourceMap) {
         Preconditions.checkNotNull(logicTable, "Logic table cannot be null.");
+        // 1、解析数据节点配置的表达式
         List<String> actualDataNodes = new InlineExpressionParser(this.actualDataNodes).evaluate();
+        // 2、获得数据源和表的分片策略
         ShardingStrategy databaseShardingStrategy = null == databaseShardingStrategyConfig ? null : databaseShardingStrategyConfig.build();
         ShardingStrategy tableShardingStrategy = null == tableShardingStrategyConfig ? null : tableShardingStrategyConfig.build();
+        // 3、获取key生成器
         KeyGenerator keyGenerator = !Strings.isNullOrEmpty(keyGeneratorColumnName) && !Strings.isNullOrEmpty(keyGeneratorClass) ? KeyGeneratorFactory.newInstance(keyGeneratorClass) : null;
+        // 4、返回表规则
         return new TableRule(logicTable, actualDataNodes, dataSourceMap, databaseShardingStrategy, tableShardingStrategy, keyGeneratorColumnName, keyGenerator, logicIndex);
     }
 }

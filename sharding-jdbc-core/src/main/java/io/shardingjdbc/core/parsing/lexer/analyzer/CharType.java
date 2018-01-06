@@ -21,7 +21,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * Char type.
+ * 字符类型
  * 
  * @author zhangliang 
  */
@@ -29,22 +29,27 @@ import lombok.NoArgsConstructor;
 public final class CharType {
     
     /**
-     * End of input.
+     * input的结束字符
+     * 代表十进制26
      */
     public static final byte EOI = 0x1A;
-    
+
+    public static void main(String[] args) {
+        System.out.println(EOI);
+    }
     /**
-     * Adjust is whitespace or not.
+     * 校验是不是空白
      * 
      * @param ch to be adjusted char
      * @return is whitespace or not
      */
     public static boolean isWhitespace(final char ch) {
+        // ch <= 32 && ch != 26 || ch >= 127 && ch <= 160
         return ch <= 0x20 && EOI != ch || ch >= 0x7F && ch <= 0xA0;
     }
     
     /**
-     * Adjust is end of input or not.
+     * 校验是不是input的end
      *
      * @param ch to be adjusted char
      * @return is end of input or not
@@ -54,7 +59,7 @@ public final class CharType {
     }
     
     /**
-     * Adjust is alphabet or not.
+     * 校验是不是字母
      *
      * @param ch to be adjusted char
      * @return is alphabet or not
@@ -64,7 +69,7 @@ public final class CharType {
     }
     
     /**
-     * Adjust is digital or not.
+     * 校验是不是数字
      *
      * @param ch to be adjusted char
      * @return is alphabet or not
@@ -74,7 +79,7 @@ public final class CharType {
     }
     
     /**
-     * Adjust is symbol or not.
+     * 校验是不是语法
      *
      * @param ch to be adjusted char
      * @return is symbol or not

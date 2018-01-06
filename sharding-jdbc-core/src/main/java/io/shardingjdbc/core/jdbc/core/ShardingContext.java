@@ -24,19 +24,31 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Sharding runtime context.
+ * 分片运行时上下文
  * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor
 @Getter
 public final class ShardingContext {
-    
+
+    /**
+     * 分片规则
+     */
     private final ShardingRule shardingRule;
-    
+
+    /**
+     * 数据源乐行
+     */
     private final DatabaseType databaseType;
-    
+
+    /**
+     * 任务执行引擎
+     */
     private final ExecutorEngine executorEngine;
-    
+
+    /**
+     * 是否打印sql用来debug
+     */
     private final boolean showSQL;
 }

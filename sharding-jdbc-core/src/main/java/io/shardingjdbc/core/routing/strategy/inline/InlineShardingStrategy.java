@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 /**
- * Standard sharding strategy.
+ * 标准分片策略
  * 
  * @author zhangliang
  */

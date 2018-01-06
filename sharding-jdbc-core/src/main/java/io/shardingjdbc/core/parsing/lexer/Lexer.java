@@ -27,31 +27,45 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Lexical analysis.
+ * 词法解析器
+ * Lexer 原理：顺序顺序顺序 解析 SQL，将字符串拆解成 N 个词法。
  * 
  * @author zhangliang 
  */
 @RequiredArgsConstructor
 public class Lexer {
-    
+
+    /**
+     * 输入字符串
+     * 比如：sql
+     */
     @Getter
     private final String input;
-    
+
+    /**
+     * 词法标记字典
+     */
     private final Dictionary dictionary;
-    
+
+    /**
+     * 解析到 SQL 的 offset
+     */
     private int offset;
-    
+
+    /**
+     * 当前 词法标记
+     */
     @Getter
     private Token currentToken;
     
     /**
-     * Analyse next token.
+     * 分析下一个词法标记.
      */
     public final void nextToken() {
         skipIgnoredToken();
-        if (isVariableBegin()) {
+        if (isVariableBegin()) {    // 变量
             currentToken = new Tokenizer(input, dictionary, offset).scanVariable();
-        } else if (isNCharBegin()) {
+        } else if (isNCharBegin()) {    // N\
             currentToken = new Tokenizer(input, dictionary, ++offset).scanChars();
         } else if (isIdentifierBegin()) {
             currentToken = new Tokenizer(input, dictionary, offset).scanIdentifier();
@@ -133,7 +147,12 @@ public class Lexer {
     private boolean isEnd() {
         return offset >= input.length();
     }
-    
+
+    /**
+     * 获得当前位置的字符，如果超过input的最大长度，返回{@link CharType#EOI}
+     * @param offset
+     * @return
+     */
     protected final char getCurrentChar(final int offset) {
         return this.offset + offset >= input.length() ? (char) CharType.EOI : input.charAt(this.offset + offset);
     }

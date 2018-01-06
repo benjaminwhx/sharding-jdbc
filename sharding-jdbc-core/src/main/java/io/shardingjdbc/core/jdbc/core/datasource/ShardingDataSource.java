@@ -32,7 +32,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Database that support sharding.
+ * 数据源分片支持
  * 
  * @author zhangliang
  */
@@ -47,21 +47,35 @@ public class ShardingDataSource extends AbstractDataSourceAdapter implements Aut
     public ShardingDataSource(final ShardingRule shardingRule) throws SQLException {
         this(shardingRule, new ConcurrentHashMap<String, Object>(), new Properties());
     }
-    
+
+    /**
+     * 入口：构建分片数据源
+     * @param shardingRule
+     * @param configMap 配置map，暂时没用
+     * @param props
+     * @throws SQLException
+     */
     public ShardingDataSource(final ShardingRule shardingRule, final Map<String, Object> configMap, final Properties props) throws SQLException {
+        // 1、调用父类构造方法，得到对应的数据源类型
         super(shardingRule.getDataSourceMap().values());
-        if (!configMap.isEmpty()) {
+
+        // 2、存在配置Map放入ConfigMapContext中
+        if (configMap != null && !configMap.isEmpty()) {
             ConfigMapContext.getInstance().getShardingConfig().putAll(configMap);
         }
+
+        // 3、获取配置信息
         shardingProperties = new ShardingProperties(null == props ? new Properties() : props);
         int executorSize = shardingProperties.getValue(ShardingPropertiesConstant.EXECUTOR_SIZE);
         executorEngine = new ExecutorEngine(executorSize);
         boolean showSQL = shardingProperties.getValue(ShardingPropertiesConstant.SQL_SHOW);
+
+        // 4、构造分片上下文
         shardingContext = new ShardingContext(shardingRule, getDatabaseType(), executorEngine, showSQL);
     }
     
     /**
-     * Renew sharding data source.
+     * 重新new一个分片数据源
      *
      * @param newShardingRule new sharding rule
      * @param newProps new sharding properties
@@ -71,6 +85,7 @@ public class ShardingDataSource extends AbstractDataSourceAdapter implements Aut
         ShardingProperties newShardingProperties = new ShardingProperties(null == newProps ? new Properties() : newProps);
         int originalExecutorSize = shardingProperties.getValue(ShardingPropertiesConstant.EXECUTOR_SIZE);
         int newExecutorSize = newShardingProperties.getValue(ShardingPropertiesConstant.EXECUTOR_SIZE);
+        // 线程池大小不同，重新new
         if (originalExecutorSize != newExecutorSize) {
             executorEngine.close();
             executorEngine = new ExecutorEngine(newExecutorSize);
@@ -79,7 +94,12 @@ public class ShardingDataSource extends AbstractDataSourceAdapter implements Aut
         shardingProperties = newShardingProperties;
         shardingContext = new ShardingContext(newShardingRule, getDatabaseType(), executorEngine, newShowSQL);
     }
-    
+
+    /**
+     * 获取连接
+     * @return
+     * @throws SQLException
+     */
     @Override
     public ShardingConnection getConnection() throws SQLException {
         return new ShardingConnection(shardingContext);

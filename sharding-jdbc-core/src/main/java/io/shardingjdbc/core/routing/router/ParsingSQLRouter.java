@@ -47,7 +47,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * SQL router with parse.
+ * 通过解析SQL路由
  * 
  * @author zhangiang
  */

@@ -84,7 +84,12 @@ public final class ShardingPreparedStatement extends AbstractShardingPreparedSta
     
     @Getter(AccessLevel.NONE)
     private ResultSet currentResultSet;
-    
+
+    /**
+     * 构建分片preparedStatement
+     * @param connection
+     * @param sql
+     */
     public ShardingPreparedStatement(final ShardingConnection connection, final String sql) {
         this(connection, sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
     }

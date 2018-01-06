@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Sharding data source parser for spring namespace.
+ * 解析spring命名空间得到分片数据源配置信息
  * 
  * @author caohao
  */
@@ -51,26 +51,41 @@ public class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDefiniti
     //CHECKSTYLE:OFF
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
     //CHECKSTYLE:ON
+
+        // 构造SpringShardingDataSource
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(SpringShardingDataSource.class);
+        // 1、解析Map<String, DataSource> dataSourceMap
         factory.addConstructorArgValue(parseDataSources(element));
+        // 2、解析ShardingRuleConfiguration shardingRuleConfig
         factory.addConstructorArgValue(parseShardingRuleConfig(element));
+        // 3、解析Map<String, Object> configMap
         factory.addConstructorArgValue(parseConfigMap(element, parserContext, factory.getBeanDefinition()));
+        // 4、解析Properties props
         factory.addConstructorArgValue(parseProperties(element, parserContext));
         factory.setDestroyMethodName("close");
         return factory.getBeanDefinition();
     }
-    
+
+    /**
+     * 解析sharding:data-source的数据源Map
+     * @param element
+     * @return
+     */
     private Map<String, RuntimeBeanReference> parseDataSources(final Element element) {
+        // sharding:sharding-rule
         Element shardingRuleElement = DomUtils.getChildElementByTagName(element, ShardingDataSourceBeanDefinitionParserTag.SHARDING_RULE_CONFIG_TAG);
+        // data-source-names 逗号分隔得到多个数据源name
         List<String> dataSources = Splitter.on(",").trimResults().splitToList(shardingRuleElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DATA_SOURCE_NAMES_TAG));
         Map<String, RuntimeBeanReference> result = new ManagedMap<>(dataSources.size());
         for (String each : dataSources) {
+            // RuntimeBeanReference就是将得到数据源的name和spring的bean对应起来
             result.put(each, new RuntimeBeanReference(each));
         }
         return result;
     }
     
     private BeanDefinition parseShardingRuleConfig(final Element element) {
+        // sharding:sharding-rule
         Element shardingRuleElement = DomUtils.getChildElementByTagName(element, ShardingDataSourceBeanDefinitionParserTag.SHARDING_RULE_CONFIG_TAG);
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(ShardingRuleConfiguration.class);
         parseDefaultDataSource(factory, shardingRuleElement);
@@ -88,21 +103,36 @@ public class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDefiniti
             factory.addPropertyValue("defaultKeyGeneratorClass", keyGeneratorClass);
         }
     }
-    
+
+    /**
+     * 解析属性default-data-source-name的值
+     * @param factory
+     * @param element
+     */
     private void parseDefaultDataSource(final BeanDefinitionBuilder factory, final Element element) {
         String defaultDataSource = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_DATA_SOURCE_NAME_TAG);
         if (!Strings.isNullOrEmpty(defaultDataSource)) {
             factory.addPropertyValue("defaultDataSourceName", defaultDataSource);
         }
     }
-    
+
+    /**
+     * 解析属性default-database-strategy-ref的值
+     * @param factory
+     * @param element
+     */
     private void parseDefaultDatabaseShardingStrategy(final BeanDefinitionBuilder factory, final Element element) {
         String defaultDatabaseShardingStrategy = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_DATABASE_STRATEGY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(defaultDatabaseShardingStrategy)) {
             factory.addPropertyReference("defaultDatabaseShardingStrategyConfig", defaultDatabaseShardingStrategy);
         }
     }
-    
+
+    /**
+     * 解析属性default-table-strategy-ref的值
+     * @param factory
+     * @param element
+     */
     private void parseDefaultTableShardingStrategy(final BeanDefinitionBuilder factory, final Element element) {
         String defaultTableShardingStrategy = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_TABLE_STRATEGY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(defaultTableShardingStrategy)) {
@@ -111,6 +141,7 @@ public class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDefiniti
     }
     
     private List<BeanDefinition> parseTableRulesConfig(final Element element) {
+        // table-rules
         Element tableRulesElement = DomUtils.getChildElementByTagName(element, ShardingDataSourceBeanDefinitionParserTag.TABLE_RULES_TAG);
         List<Element> tableRuleElements = DomUtils.getChildElementsByTagName(tableRulesElement, ShardingDataSourceBeanDefinitionParserTag.TABLE_RULE_TAG);
         List<BeanDefinition> result = new ManagedList<>(tableRuleElements.size());

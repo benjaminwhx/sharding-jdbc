@@ -25,7 +25,7 @@ import io.shardingjdbc.core.parsing.parser.token.SQLToken;
 import java.util.List;
 
 /**
- * SQL statement.
+ * SQL表达式
  *
  * @author zhangliang
  */

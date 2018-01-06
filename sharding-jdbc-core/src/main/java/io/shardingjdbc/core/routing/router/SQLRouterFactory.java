@@ -23,7 +23,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * SQL router factory.
+ * SQL路由工厂类
  * 
  * @author zhangiang
  */
@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 public final class SQLRouterFactory {
     
     /**
-     * Create SQL router.
+     * 创建SQL路由结果
      * 
      * @param shardingContext Sharding runtime context
      * @return SQL router instance

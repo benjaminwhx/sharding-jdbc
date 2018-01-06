@@ -36,7 +36,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 /**
- * Unsupported {@code Connection} methods.
+ * 暂时还不支持的连接方法
  * 
  * @author zhangliang
  */

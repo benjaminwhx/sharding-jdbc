@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * The config map context.
+ * 配置map上下文
  *
  * @author caohao
  */
@@ -33,7 +33,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ConfigMapContext {
     
     private static final ConfigMapContext INSTANCE = new ConfigMapContext();
-    
+
+    /**
+     * 分片配置
+     */
     @Getter
     private Map<String, Object> shardingConfig = new ConcurrentHashMap<>();
     
@@ -41,7 +44,7 @@ public final class ConfigMapContext {
     private Map<String, Object> masterSlaveConfig = new ConcurrentHashMap<>();
     
     /**
-     * Get a new instance for {@code ConfigMapContext}.
+     * 返回单例
      *
      * @return  {@code ConfigMapContext} instance
      */

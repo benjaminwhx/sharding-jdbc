@@ -26,12 +26,20 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Sharding datasource for spring namespace.
+ * spring命名空间的分片数据源
  *
  * @author caohao
  */
 public class SpringShardingDataSource extends ShardingDataSource {
-    
+
+    /**
+     *
+     * @param dataSourceMap 数据源配置
+     * @param shardingRuleConfig 分片规则配置
+     * @param configMap 配置map
+     * @param props 属性
+     * @throws SQLException
+     */
     public SpringShardingDataSource(final Map<String, DataSource> dataSourceMap, final ShardingRuleConfiguration shardingRuleConfig, 
                                     final Map<String, Object> configMap, final Properties props) throws SQLException {
         super(shardingRuleConfig.build(dataSourceMap), configMap, props);

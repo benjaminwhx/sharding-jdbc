@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * None sharding strategy.
+ * 没有分片策略
  * 
  * @author zhangliang
  */

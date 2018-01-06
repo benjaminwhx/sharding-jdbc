@@ -69,6 +69,7 @@ public final class ShardingRule {
         this.tableRules = tableRules;
         for (String group : bindingTableGroups) {
             List<TableRule> tableRulesForBinding = new LinkedList<>();
+            // 逗号分隔
             for (String logicTableNameForBindingTable : StringUtil.splitWithComma(group)) {
                 tableRulesForBinding.add(getTableRule(logicTableNameForBindingTable));
             }
@@ -90,10 +91,10 @@ public final class ShardingRule {
     }
     
     /**
-     * Try to find table rule though logic table name.
+     * 根据逻辑表名找出对应的TableRule
      * 
-     * @param logicTableName logic table name
-     * @return table rule
+     * @param logicTableName 逻辑表名
+     * @return 表规则
      */
     public Optional<TableRule> tryFindTableRule(final String logicTableName) {
         for (TableRule each : tableRules) {
@@ -105,6 +106,7 @@ public final class ShardingRule {
     }
     
     /**
+     * 通过逻辑表名找到表规则
      * Find table rule though logic table name.
      *
      * @param logicTableName logic table name
@@ -112,9 +114,11 @@ public final class ShardingRule {
      */
     public TableRule getTableRule(final String logicTableName) {
         Optional<TableRule> tableRule = tryFindTableRule(logicTableName);
+        // 值存在直接返回
         if (tableRule.isPresent()) {
             return tableRule.get();
         }
+        // 存在默认数据源，创建表规则
         if (null != defaultDataSourceName) {
             return createTableRuleWithDefaultDataSource(logicTableName);
         }

@@ -25,7 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * Invocation that reflected call for JDBC method.
+ * 发射调用JDBC方法
  * 
  * @author gaohongtao
  */
@@ -39,7 +39,7 @@ public class JdbcMethodInvocation {
     private final Object[] arguments;
     
     /**
-     * Invoke JDBC method.
+     * 调用JDBC方法
      * 
      * @param target target object
      */

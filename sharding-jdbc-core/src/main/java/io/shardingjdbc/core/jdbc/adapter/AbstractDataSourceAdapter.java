@@ -45,7 +45,14 @@ public abstract class AbstractDataSourceAdapter extends AbstractUnsupportedOpera
     public AbstractDataSourceAdapter(final Collection<DataSource> dataSources) throws SQLException {
         databaseType = getDatabaseType(dataSources);
     }
-    
+
+    /**
+     * 获取数据源集合【最后一个】数据源的类型
+     * 校验规则：必须所有数据源的类型一致才行
+     * @param dataSources
+     * @return
+     * @throws SQLException
+     */
     protected DatabaseType getDatabaseType(final Collection<DataSource> dataSources) throws SQLException {
         DatabaseType result = null;
         for (DataSource each : dataSources) {
@@ -55,7 +62,13 @@ public abstract class AbstractDataSourceAdapter extends AbstractUnsupportedOpera
         }
         return result;
     }
-    
+
+    /**
+     * 获取数据源类型
+     * @param dataSource
+     * @return
+     * @throws SQLException
+     */
     private DatabaseType getDatabaseType(final DataSource dataSource) throws SQLException {
         if (dataSource instanceof AbstractDataSourceAdapter) {
             return ((AbstractDataSourceAdapter) dataSource).databaseType;

@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Connection that support sharding.
+ * 分片连接
  * 
  * @author zhangliang
  * @author gaohongtao
@@ -54,7 +54,7 @@ public final class ShardingConnection extends AbstractConnectionAdapter {
     private final ShardingContext shardingContext;
     
     /**
-     * Get all database connections via data source name. 
+     * 根据数据源名字获取所有连接
      *
      * <p>Master-slave connection will return all actual connections</p>
      * 
@@ -83,7 +83,7 @@ public final class ShardingConnection extends AbstractConnectionAdapter {
     }
     
     /**
-     * Get database connection via data source name.
+     * 获取数据源连接
      * 
      * @param dataSourceName data source name
      * @param sqlType SQL type
@@ -92,6 +92,7 @@ public final class ShardingConnection extends AbstractConnectionAdapter {
      */
     public Connection getConnection(final String dataSourceName, final SQLType sqlType) throws SQLException {
         if (getCachedConnections().containsKey(dataSourceName)) {
+            // 返回缓存连接
             return getCachedConnections().get(dataSourceName);
         }
         DataSource dataSource = shardingContext.getShardingRule().getDataSourceMap().get(dataSourceName);
@@ -114,7 +115,7 @@ public final class ShardingConnection extends AbstractConnectionAdapter {
     }
     
     /**
-     * Release connection.
+     * 释放连接
      *
      * @param connection to be released connection
      */

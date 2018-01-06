@@ -40,11 +40,14 @@ import java.util.Set;
 public final class InlineExpressionParser {
     
     private static final char SPLITTER = ',';
-    
+
+    /**
+     * exp: ds_${0..1}.t_order_${0..1}
+     */
     private final String inlineExpression;
     
     /**
-     * Split and evaluate inline expression.
+     * 拆分表达式集合以及解析各个表达式
      *
      * @return result list
      */
@@ -54,7 +57,14 @@ public final class InlineExpressionParser {
         }
         return flatten(evaluate(split()));
     }
-    
+
+    /**
+     * 解析表达式
+     * ds_${0..1}.t_order_${0..1}解析为
+     * [ds_0.t_order_0, ds_0.t_order_1, ds_1.t_order_0, ds_1.t_order_1]
+     * @param inlineExpressions
+     * @return
+     */
     private List<Object> evaluate(final List<String> inlineExpressions) {
         List<Object> result = new ArrayList<>(inlineExpressions.size());
         GroovyShell shell = new GroovyShell();
@@ -70,10 +80,15 @@ public final class InlineExpressionParser {
         }
         return result;
     }
-    
+
+    /**
+     * 根据逗号拆分表达式，放入list中（这里忽略了逗号在${}表达式内部的情况）
+     * @return
+     */
     private List<String> split() {
         List<String> result = new ArrayList<>();
         StringBuilder segment = new StringBuilder();
+        // 当遇上 ${，bracketsDepth+1，遇上}，bracketsDepth-1
         int bracketsDepth = 0;
         for (int i = 0; i < inlineExpression.length(); i++) {
             char each = inlineExpression.charAt(i);
@@ -108,7 +123,7 @@ public final class InlineExpressionParser {
         }
         return result;
     }
-    
+
     private List<String> flatten(final List<Object> segments) {
         List<String> result = new ArrayList<>();
         for (Object each : segments) {

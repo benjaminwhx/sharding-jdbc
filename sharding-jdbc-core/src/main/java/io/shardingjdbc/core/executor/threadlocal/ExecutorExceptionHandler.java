@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.sql.SQLException;
 
 /**
- * Executor runtime exception handler.
+ * Executor运行时异常处理器
  * 
  * @author zhangliang
  */
@@ -36,7 +36,7 @@ public final class ExecutorExceptionHandler {
     private static final ThreadLocal<Boolean> IS_EXCEPTION_THROWN = new ThreadLocal<>();
     
     /**
-     * Set throw exception if error occur or not.
+     * 设置发生异常时是否需要抛出去
      *
      * @param isExceptionThrown throw exception if error occur or not
      */
@@ -45,7 +45,7 @@ public final class ExecutorExceptionHandler {
     }
     
     /**
-     * Get throw exception if error occur or not.
+     * 发生异常时获取是否要跑出去
      * 
      * @return throw exception if error occur or not
      */
@@ -54,7 +54,7 @@ public final class ExecutorExceptionHandler {
     }
     
     /**
-     * Handle exception. 
+     * 异常处理
      * 
      * @param exception to be handled exception
      * @throws SQLException SQL exception
