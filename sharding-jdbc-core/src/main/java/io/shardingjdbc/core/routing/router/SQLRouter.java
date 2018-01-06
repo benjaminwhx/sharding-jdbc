@@ -23,7 +23,7 @@ import io.shardingjdbc.core.routing.SQLRouteResult;
 import java.util.List;
 
 /**
- * SQL路由接口
+ * SQL路由器接口
  * 
  * @author zhangiang
  */
@@ -40,6 +40,7 @@ public interface SQLRouter {
     
     /**
      * 路由SQL
+     * 主要sql转换以及数据源查找在此方法完成
      * 
      * @param logicSQL logic SQL
      * @param sqlStatement SQL statement

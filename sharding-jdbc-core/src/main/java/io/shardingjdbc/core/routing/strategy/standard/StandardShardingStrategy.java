@@ -38,11 +38,20 @@ import java.util.TreeSet;
  * @author zhangliang
  */
 public final class StandardShardingStrategy implements ShardingStrategy {
-    
+
+    /**
+     * 分片列名
+     */
     private final String shardingColumn;
-    
+
+    /**
+     * 精确的分片算法类名称，用于=和IN。该类需使用默认的构造器或者提供无参数的构造器
+     */
     private final PreciseShardingAlgorithm preciseShardingAlgorithm;
-    
+
+    /**
+     * 范围的分片算法类名称，用于BETWEEN。该类需使用默认的构造器或者提供无参数的构造器
+     */
     private final Optional<RangeShardingAlgorithm> rangeShardingAlgorithm;
     
     public StandardShardingStrategy(final String shardingColumn, final PreciseShardingAlgorithm preciseShardingAlgorithm) {

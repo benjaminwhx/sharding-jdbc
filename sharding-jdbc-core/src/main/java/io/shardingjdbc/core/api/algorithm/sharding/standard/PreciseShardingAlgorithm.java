@@ -23,7 +23,7 @@ import io.shardingjdbc.core.routing.strategy.ShardingAlgorithm;
 import java.util.Collection;
 
 /**
- * Precise sharding algorithm.
+ * 精确的分片算法
  * 
  * @author zhangliang
  * 
@@ -32,7 +32,7 @@ import java.util.Collection;
 public interface PreciseShardingAlgorithm<T extends Comparable<?>> extends ShardingAlgorithm {
     
     /**
-     * Sharding.
+     * 分片
      * 
      * @param availableTargetNames available data sources or tables's names
      * @param shardingValue sharding value

@@ -30,7 +30,7 @@ public class RoutingResult {
     private final TableUnits tableUnits = new TableUnits();
     
     /**
-     * Adjust is route for single database and table only or not.
+     * 是否路由一个数据源和表
      *
      * @return is route for single database and table only or not
      */

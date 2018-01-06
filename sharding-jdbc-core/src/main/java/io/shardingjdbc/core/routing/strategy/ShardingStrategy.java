@@ -29,17 +29,17 @@ import java.util.Collection;
 public interface ShardingStrategy {
     
     /**
-     * 获取分片的列
+     * 获取分片的列名集合
      * 
-     * @return 分片列
+     * @return 分片列名集合
      */
     Collection<String> getShardingColumns();
     
     /**
      * 分片.
      *
-     * @param availableTargetNames available data sources or tables's names
-     * @param shardingValues sharding values
+     * @param availableTargetNames 有效的数据源或表名
+     * @param shardingValues 分片值
      * @return sharding results for data sources or tables's names
      */
     Collection<String> doSharding(Collection<String> availableTargetNames, Collection<ShardingValue> shardingValues);

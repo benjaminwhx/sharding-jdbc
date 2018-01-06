@@ -25,15 +25,18 @@ import lombok.RequiredArgsConstructor;
 import java.sql.PreparedStatement;
 
 /**
- * PreparedStatement execute unit.
+ * PreparedStatement执行单元
  *
  * @author zhangliang
  */
 @RequiredArgsConstructor
 @Getter
 public final class PreparedStatementUnit implements BaseStatementUnit {
-    
+
+    /**
+     * sql执行单元
+     */
     private final SQLExecutionUnit sqlExecutionUnit;
-    
+
     private final PreparedStatement statement;
 }

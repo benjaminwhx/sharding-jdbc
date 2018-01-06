@@ -46,9 +46,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * SQL rewrite engine.
- * 
- * <p>Rewrite logic SQL to actual SQL, should rewrite table name and optimize something.</p>
+ * SQL重写引擎
+ *
+ * 重写逻辑sql到真实sql，应该重写表名以及优化一些事
  *
  * @author zhangliang
  */

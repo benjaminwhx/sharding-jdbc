@@ -62,6 +62,7 @@ public final class SimpleRoutingEngine implements RoutingEngine {
         List<ShardingValue> tableShardingValues = getTableShardingValues(tableRule);
         Collection<String> routedDataSources = routeDataSources(tableRule, databaseShardingValues);
         Collection<DataNode> routedDataNodes = new LinkedList<>();
+        // 遍历数据源得到路由的表集合
         for (String each : routedDataSources) {
             routedDataNodes.addAll(routeTables(tableRule, each, tableShardingValues));
         }

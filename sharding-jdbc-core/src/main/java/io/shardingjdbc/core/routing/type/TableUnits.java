@@ -34,7 +34,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Route table unit collection.
+ * 路由表单元集合
  * 
  * @author zhangliang
  */
@@ -45,7 +45,7 @@ public final class TableUnits {
     private final List<TableUnit> tableUnits = new LinkedList<>();
     
     /**
-     * Get all data source names.
+     * 获得所有数据源名字
      *
      * @return all data source names
      */

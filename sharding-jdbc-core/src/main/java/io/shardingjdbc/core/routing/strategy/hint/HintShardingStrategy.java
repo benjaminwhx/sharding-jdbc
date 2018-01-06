@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 /**
- * Hint sharding strategy.
+ * 提示分片策略
  * 
  * @author zhangliang
  */

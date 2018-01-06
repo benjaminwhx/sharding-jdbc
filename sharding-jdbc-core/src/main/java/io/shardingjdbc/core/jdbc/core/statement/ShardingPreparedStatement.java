@@ -73,7 +73,10 @@ public final class ShardingPreparedStatement extends AbstractShardingPreparedSta
     private final List<BatchPreparedStatementUnit> batchStatementUnits = new LinkedList<>();
     
     private final List<List<Object>> parameterSets = new LinkedList<>();
-    
+
+    /**
+     * 路由结束后的表达式集合
+     */
     private final Collection<PreparedStatement> routedStatements = new LinkedList<>();
     
     @Getter(AccessLevel.NONE)
@@ -152,6 +155,7 @@ public final class ShardingPreparedStatement extends AbstractShardingPreparedSta
     
     private Collection<PreparedStatementUnit> route() throws SQLException {
         Collection<PreparedStatementUnit> result = new LinkedList<>();
+        // 路由引擎进行路由，返回路由的结果
         routeResult = routingEngine.route(getParameters());
         for (SQLExecutionUnit each : routeResult.getExecutionUnits()) {
             SQLType sqlType = routeResult.getSqlStatement().getType();
@@ -159,11 +163,13 @@ public final class ShardingPreparedStatement extends AbstractShardingPreparedSta
             if (SQLType.DDL == sqlType) {
                 preparedStatements = generatePreparedStatementForDDL(each);
             } else {
+                // 返回单个PreparedStatement
                 preparedStatements = Collections.singletonList(generatePreparedStatement(each));
             }
             routedStatements.addAll(preparedStatements);
             for (PreparedStatement preparedStatement : preparedStatements) {
                 replaySetParameter(preparedStatement);
+                // 封装结果
                 result.add(new PreparedStatementUnit(each, preparedStatement));
             }
         }

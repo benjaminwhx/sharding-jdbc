@@ -30,9 +30,15 @@ import java.util.List;
  * @author zhangliang
  */
 public final class PreparedStatementRoutingEngine {
-    
+
+    /**
+     * 原始sql
+     */
     private final String logicSQL;
-    
+
+    /**
+     * sql路由器
+     */
     private final SQLRouter sqlRouter;
     
     private SQLStatement sqlStatement;
@@ -47,7 +53,7 @@ public final class PreparedStatementRoutingEngine {
      *
      * 第一次路由会解析sql，接着之后会复用第一次的解析结果。
      *
-     * @param parameters sql占位符参数
+     * @param parameters sql占位符参数值集合
      * @return 路由结果
      */
     public SQLRouteResult route(final List<Object> parameters) {

@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * SQL execution unit.
+ * SQL执行单元，可以用来正常执行的数据源以及sql
  * 
  * @author gaohongtao
  */

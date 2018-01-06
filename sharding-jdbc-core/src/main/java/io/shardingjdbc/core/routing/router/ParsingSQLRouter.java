@@ -47,7 +47,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 通过解析SQL路由
+ * SQL解析路由器
  * 
  * @author zhangiang
  */
@@ -84,6 +84,7 @@ public final class ParsingSQLRouter implements SQLRouter {
         if (sqlStatement instanceof InsertStatement && null != ((InsertStatement) sqlStatement).getGeneratedKey()) {
             processGeneratedKey(parameters, (InsertStatement) sqlStatement, result);
         }
+        // 路由取得真实的数据源和表集合
         RoutingResult routingResult = route(parameters, sqlStatement);
         SQLRewriteEngine rewriteEngine = new SQLRewriteEngine(shardingRule, logicSQL, databaseType, sqlStatement);
         boolean isSingleRouting = routingResult.isSingleRouting();
